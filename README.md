@@ -1,7 +1,7 @@
 Anti-HTTP flood (Apache Only)
 ============
 
-This script helps to prevent and neutralize Apache floods / DDoS attacks. 
+This script helps to prevent and neutralize Apache floods / DDoS attacks on Linux. 
 Unfortunately it is not as effective as it used to be because many DDoS attacks are not layer-7, 
 but if you have no protection at all and keep getting HTTP floods using apache server, then this
 will help you weed out some of the drive-by bad guys hitting your server.
@@ -27,7 +27,10 @@ Usage
 =====
 
 The script can be tested by simply running `./antiflood.php` at the terminal. It will immediately begin scanning the server
-for excessive connections.  The values I have placed are particularly high by default, but everyone's server and needs are
+for excessive connections. To run it in the background, use `nohup ./antiflood.php &`, and to kill it at any time, just type 
+`killall antiflood.php`. (Assuming Linux)
+
+The values I have placed are particularly high by default, but everyone's server and needs are
 different so you may be required to adjust them. Each setting is explained below:
 
 `$apache_connections_limit = "67";` - This is the maximum number of connections an IP address can have on apache's /server-status page. 
@@ -37,9 +40,9 @@ a KeepAliveTimeOut of 3.
 `$connections_limit = "650";` - This is the maximum number of open sockets to allow a single IP address to have, regardless of current state. 
 It works independently of Apache
 
-$SYNRECV_connections_limit = "150";  - This is the maximum number of SYN_REC (Syn Received) to allow a single IP address to have. This means
+`$SYNRECV_connections_limit = "150";`  - This is the maximum number of SYN_REC (Syn Received) to allow a single IP address to have. This means
 the connection hasn't been established yet and it's waiting. A lot of these is very bad to have from one IP.
 
-$ESTABLISHED_connections_limit = "60";  // This is the maximum number of fully established connections to allow a single IP address to have. Many
+`$ESTABLISHED_connections_limit = "60";`  // This is the maximum number of fully established connections to allow a single IP address to have. Many
 of these is bad if you're ONLY hosting an HTTP server as connections seem to come and go. The default is 60; but be careful with this if
 you're hosting other services where a constant connection is normal.
